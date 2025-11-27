@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat, Open_Sans } from "next/font/google";
@@ -30,8 +31,14 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable}`}
     >
-      <body className="bg-battle text-white font-[var(--font-body)]">
-        {children}
+      <body className="bg-battle text-white font-[var(--font-body)] overflow-x-hidden">
+        {/* Cinematic background layers (global) */}
+        <div className="bg-halo" />
+        <div className="bg-scanlines" />
+        <div className="bg-noise" />
+
+        {/* Foreground content */}
+        <div className="relative z-10 page-shell">{children}</div>
       </body>
     </html>
   );

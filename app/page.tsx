@@ -23,12 +23,15 @@ function EnlistModal({ onClose }: { onClose: () => void }) {
     };
 
     try {
-      await fetch("https://script.google.com/macros/u/4/s/AKfycbyrkQjSchQ9Ma1jCd10ixvzSUulRJr8D4hKf733fxTir6xCiE2vfbhgVIkpvRFZHMc_/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      await fetch(
+        "https://script.google.com/macros/u/4/s/AKfycbyrkQjSchQ9Ma1jCd10ixvzSUulRJr8D4hKf733fxTir6xCiE2vfbhgVIkpvRFZHMc_/exec",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        },
+      );
       setSuccess(true);
       (form.elements.namedItem("name") as HTMLInputElement).value = "";
       (form.elements.namedItem("email") as HTMLInputElement).value = "";
@@ -44,7 +47,7 @@ function EnlistModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-      <div className="bg-[#0b0b0b] border border-stealth p-8 w-full max-w-sm shadow-lg">
+      <div className="bg-[#0b0b0b] border border-stealth p-8 w-full max-w-sm shadow-stealth">
         {!success ? (
           <>
             <h2 className="text-xl font-semibold text-white mb-5 tracking-wide font-[var(--font-heading)] uppercase">
@@ -83,7 +86,7 @@ function EnlistModal({ onClose }: { onClose: () => void }) {
 
               <button
                 type="submit"
-                className="w-full py-2 bg-crimson hover:bg-crimson/80 transition text-white text-sm tracking-wider uppercase"
+                className="w-full py-2 bg-crimson hover:bg-crimson/80 transition text-white text-sm tracking-wider uppercase glow-crimson shadow-crimson"
                 disabled={loading}
               >
                 {loading ? "Processing..." : "Submit"}
@@ -183,7 +186,7 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => setShowForm(true)}
-                  className="inline-flex items-center justify-center px-8 py-3 text-xs md:text-sm font-semibold tracking-[0.25em] uppercase bg-crimson hover:bg-crimson/80 text-white transition-colors shadow-[0_0_30px_rgba(193,39,45,0.45)] hover:shadow-[0_0_40px_rgba(193,39,45,0.7)] font-[var(--font-heading)]"
+                  className="inline-flex items-center justify-center px-8 py-3 text-xs md:text-sm font-semibold tracking-[0.25em] uppercase bg-crimson hover:bg-crimson/80 text-white transition-colors shadow-crimson glow-crimson font-[var(--font-heading)]"
                 >
                   ENLIST NOW
                 </button>
@@ -196,7 +199,7 @@ export default function HomePage() {
             </div>
 
             {/* Daily protocol card */}
-            <aside className="border border-stealth bg-[#101010] p-7 md:p-8 rounded-none shadow-[0_0_24px_rgba(0,0,0,0.6)]">
+            <aside className="border border-stealth bg-[#101010]/95 p-7 md:p-8 rounded-none shadow-stealth backdrop-blur-sm">
               <h2 className="text-xs font-semibold tracking-[0.25em] uppercase text-iron mb-4 font-[var(--font-heading)]">
                 Daily protocol
               </h2>
@@ -263,7 +266,7 @@ export default function HomePage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {/* Morning Check-In */}
-            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none">
+            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none shadow-stealth">
               <h3 className="text-sm font-semibold tracking-[0.2em] uppercase mb-3 font-[var(--font-heading)]">
                 Morning Check-In
               </h3>
@@ -288,7 +291,7 @@ export default function HomePage() {
             </div>
 
             {/* Evening Report */}
-            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none">
+            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none shadow-stealth">
               <h3 className="text-sm font-semibold tracking-[0.2em] uppercase mb-3 font-[var(--font-heading)]">
                 Evening Report
               </h3>
@@ -313,7 +316,7 @@ export default function HomePage() {
             </div>
 
             {/* Weekly Summary */}
-            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none">
+            <div className="border border-stealth bg-[#050505] p-5 md:p-6 flex flex-col rounded-none shadow-stealth">
               <h3 className="text-sm font-semibold tracking-[0.2em] uppercase mb-3 font-[var(--font-heading)]">
                 Weekly Summary
               </h3>
@@ -403,7 +406,7 @@ export default function HomePage() {
 
             <button
               onClick={() => setShowForm(true)}
-              className="inline-flex items-center justify-center px-6 py-2 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase bg-crimson hover:bg-crimson/80 text-white transition-colors font-[var(--font-heading)]"
+              className="inline-flex items-center justify-center px-6 py-2 text-xs md:text-sm font-semibold tracking-[0.22em] uppercase bg-crimson hover:bg-crimson/80 text-white transition-colors font-[var(--font-heading)] shadow-crimson glow-crimson"
             >
               Open Enlist Form
             </button>
