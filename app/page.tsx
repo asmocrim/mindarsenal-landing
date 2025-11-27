@@ -12,7 +12,7 @@ export default function HomePage() {
             <div className="flex items-center gap-3">
               <div className="relative h-8 w-8">
                 <Image
-                  src="/logo-mindarsenal.svg"
+                  src="/logo-mindarsenal.png"
                   alt="MindArsenal logo"
                   fill
                   className="object-contain"
@@ -259,10 +259,10 @@ export default function HomePage() {
               </span>
               {/* TODO: replace with your real email */}
               <a
-                href="mailto:mindarsenal@yourmail.com?subject=MindArsenal%20Early%20Tester%20Enlistment"
+                href="mailto:asmo@mindarsenal.com?subject=MindArsenal%20Early%20Tester%20Enlistment"
                 className="text-sm text-red-500 hover:text-red-400 underline underline-offset-4"
               >
-                mindarsenal@yourmail.com
+                asmo@mindarsenal.com
               </a>
             </div>
           </div>
