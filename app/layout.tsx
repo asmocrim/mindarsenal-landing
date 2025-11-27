@@ -27,19 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${headingFont.variable} ${bodyFont.variable}`}
-    >
-      <body className="bg-battle text-white font-[var(--font-body)] overflow-x-hidden">
-        {/* Cinematic background layers (global) */}
-        <div className="bg-halo" />
-        <div className="bg-scanlines" />
-        <div className="bg-noise" />
-
-        {/* Foreground content */}
-        <div className="relative z-10 page-shell">{children}</div>
+    <html lang="en" className="bg-battle">
+      <body
+        className={`${headingFont.variable} ${bodyFont.variable} bg-battle text-white font-[var(--font-body)]`}
+      >
+        {children}
       </body>
     </html>
   );
 }
+
