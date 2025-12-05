@@ -5,7 +5,6 @@ import { useState } from "react";
 const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzSWPutBYMf1wAsCjtsoofJ3nw4MO_ALlFxw2TlZrI3htMs2aviWDTsN3wGHwE9ik/exec";
 
-
 export function EnlistForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,32 +19,21 @@ export function EnlistForm() {
     setStatus("loading");
     setError(null);
 
-    const appsPayload = { name, email, goals };
-    const telegramPayload = { name, email, goals, timezone: "" };
-
     try {
-      // 1) Google Apps Script (Sheet)
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(appsPayload),
+        body: JSON.stringify({ name, email, goals }),
       });
 
-      // 2) Telegram alert
-      fetch("/api/enlist-alert", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(telegramPayload),
-      }).catch((err) =>
-        console.error("Telegram alert error (enlist page):", err),
-      );
+      console.log("Enlist page response status:", res.status);
 
       setStatus("success");
       setName("");
       setEmail("");
       setGoals("");
     } catch (err: any) {
+      console.error("Enlist page error:", err);
       setStatus("error");
       setError(err?.message || "Something went wrong.");
     }

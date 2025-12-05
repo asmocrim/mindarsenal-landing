@@ -19,33 +19,22 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
 
     const form = e.currentTarget;
 
-    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
-    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const timezone = (form.elements.namedItem("timezone") as HTMLInputElement)
-      .value;
-    const goals = (form.elements.namedItem("goals") as HTMLTextAreaElement)
-      .value;
-
-    const appsPayload = { name, email, goals }; // what goes to Sheet
-    const telegramPayload = { name, email, timezone, goals }; // what goes to bot
+    const payload = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      timezone: (form.elements.namedItem("timezone") as HTMLInputElement).value,
+      goals: (form.elements.namedItem("goals") as HTMLTextAreaElement).value,
+    };
 
     try {
-      // 1) Send to Google Sheet (same shape as before)
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(appsPayload),
+        body: JSON.stringify(payload),
       });
 
-      // 2) Fire Telegram alert (non-blocking)
-      fetch("/api/enlist-alert", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(telegramPayload),
-      }).catch((err) =>
-        console.error("Telegram alert error (modal):", err),
-      );
+      // For debugging if something goes wrong later
+      console.log("Modal enlist response status:", res.status);
 
       setSuccess(true);
 
@@ -55,7 +44,7 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
       (form.elements.namedItem("timezone") as HTMLInputElement).value = "";
       (form.elements.namedItem("goals") as HTMLTextAreaElement).value = "";
     } catch (err) {
-      console.error("Enlist submit error:", err);
+      console.error("Enlist submit error (modal):", err);
     } finally {
       setLoading(false);
       setTimeout(() => onClose(), 2000);
@@ -64,10 +53,10 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-      <div className="w-full max-w-sm border border-stealth bg-[#0b0b0b] p-8 shadow-stealth">
+      <div className="w-full max-w-sm bg-[#0b0b0b] border border-stealth p-8 shadow-stealth">
         {!success ? (
           <>
-            <h2 className="mb-5 font-[var(--font-heading)] text-xl font-semibold uppercase tracking-wide text-white">
+            <h2 className="mb-5 text-xl font-semibold tracking-wide text-white font-[var(--font-heading)] uppercase">
               Enlist Now
             </h2>
 
@@ -104,7 +93,7 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-crimson py-2 text-sm font-semibold uppercase tracking-[0.25em] text-white shadow-crimson transition hover:bg-crimson/80 glow-crimson"
+                className="w-full py-2 text-sm font-semibold tracking-[0.25em] uppercase bg-crimson text-white transition hover:bg-crimson/80 glow-crimson shadow-crimson"
               >
                 {loading ? "Processing..." : "Submit"}
               </button>
