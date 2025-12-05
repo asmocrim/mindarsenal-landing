@@ -19,27 +19,30 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
 
     const form = e.currentTarget;
 
-    const payload = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      timezone: (form.elements.namedItem("timezone") as HTMLInputElement).value,
-      goals: (form.elements.namedItem("goals") as HTMLTextAreaElement).value,
-    };
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const timezone = (form.elements.namedItem("timezone") as HTMLInputElement)
+      .value;
+    const goals = (form.elements.namedItem("goals") as HTMLTextAreaElement)
+      .value;
+
+    const appsPayload = { name, email, goals }; // what goes to Sheet
+    const telegramPayload = { name, email, timezone, goals }; // what goes to bot
 
     try {
-      // 1) Send to Google Sheet
+      // 1) Send to Google Sheet (same shape as before)
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(appsPayload),
       });
 
-      // 2) Send Telegram alert (fire-and-forget – errors don’t block user)
+      // 2) Fire Telegram alert (non-blocking)
       fetch("/api/enlist-alert", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(telegramPayload),
       }).catch((err) =>
         console.error("Telegram alert error (modal):", err),
       );
