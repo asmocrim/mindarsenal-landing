@@ -11,11 +11,11 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col bg-battle text-white">
       {/* HERO */}
       <section className="flex-1 border-b border-stealth">
-        <div className="relative mx-auto max-w-5xl px-6 py-10 lg:py-20">
+        <div className="relative mx-auto max-w-5xl px-5 py-8 sm:px-6 sm:py-10 lg:py-20">
           {/* Top bar */}
-          <header className="mb-16 flex items-center gap-6">
+          <header className="mb-10 flex items-center gap-6 sm:mb-14 lg:mb-16">
             <div className="flex items-center gap-3">
-              <div className="relative h-8 w-8">
+              <div className="relative h-8 w-8 sm:h-9 sm:w-9">
                 <Image
                   src="/logo_mindarsenal.png"
                   alt="MindArsenal logo"
@@ -24,12 +24,12 @@ export default function HomePage() {
                   priority
                 />
               </div>
-              <span className="font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.2em] text-iron">
+              <span className="font-[var(--font-heading)] text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-iron sm:text-xs">
                 MindArsenal
               </span>
             </div>
 
-            <nav className="ml-auto hidden items-center gap-10 font-[var(--font-heading)] text-xs uppercase tracking-[0.2em] text-iron md:flex">
+            <nav className="ml-auto hidden items-center gap-8 font-[var(--font-heading)] text-[0.65rem] uppercase tracking-[0.22em] text-iron md:flex">
               <a href="#what" className="transition-colors hover:text-white">
                 What it is
               </a>
@@ -45,14 +45,14 @@ export default function HomePage() {
             </nav>
           </header>
 
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)] lg:items-center">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)] lg:items-center">
             {/* Hero copy */}
-            <div className="space-y-8">
-              <p className="font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.25em] text-crimson">
+            <div className="space-y-6 sm:space-y-7 lg:space-y-8 fade-in">
+              <p className="font-[var(--font-heading)] text-[0.7rem] font-semibold uppercase tracking-[0.26em] text-crimson sm:text-xs">
                 War on mediocrity
               </p>
 
-              <h1 className="font-[var(--font-heading)] text-5xl font-bold uppercase leading-tight tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.12)] md:text-6xl lg:text-7xl">
+              <h1 className="font-[var(--font-heading)] text-4xl font-bold uppercase leading-tight tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.12)] sm:text-5xl md:text-6xl lg:text-7xl">
                 AI discipline
                 <br />
                 coach.
@@ -62,7 +62,7 @@ export default function HomePage() {
                 No excuses.
               </h1>
 
-              <p className="max-w-xl text-sm text-neutral-300 md:text-base">
+              <p className="max-w-xl text-[0.8rem] text-neutral-300 sm:text-sm md:text-base">
                 MindArsenal is a ruthless AI habit coach that runs your{" "}
                 <span className="font-semibold text-white">
                   Morning Check-In
@@ -79,14 +79,14 @@ export default function HomePage() {
                 elite standards.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <button
                   onClick={() => setShowForm(true)}
-                  className="font-[var(--font-heading)] inline-flex items-center justify-center px-8 py-3 text-xs font-semibold uppercase tracking-[0.25em] bg-crimson text-white transition-colors shadow-crimson glow-crimson hover:bg-crimson/80 md:text-sm"
+                  className="font-[var(--font-heading)] inline-flex items-center justify-center px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.3em] bg-crimson text-white shadow-crimson glow-crimson transition-colors hover:bg-crimson/80 sm:px-8 sm:text-xs md:text-sm"
                 >
                   ENLIST NOW
                 </button>
-                <p className="text-xs text-iron">
+                <p className="max-w-xs text-[0.7rem] text-iron sm:text-xs">
                   First cohort: limited early testers.
                   <br />
                   High accountability. No hand-holding.
@@ -95,11 +95,11 @@ export default function HomePage() {
             </div>
 
             {/* Daily protocol card */}
-            <aside className="rounded-none border border-stealth bg-[#101010]/95 p-7 shadow-stealth backdrop-blur-sm md:p-8">
-              <h2 className="mb-4 font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.25em] text-iron">
+            <aside className="fade-in-delay-1 rounded-none border border-stealth bg-[#101010]/95 p-6 shadow-stealth backdrop-blur-sm sm:p-7 md:p-8">
+              <h2 className="mb-4 font-[var(--font-heading)] text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-iron sm:text-xs">
                 Daily protocol
               </h2>
-              <ul className="space-y-4 text-sm text-neutral-200">
+              <ul className="space-y-3 text-[0.8rem] text-neutral-200 sm:space-y-4 sm:text-sm">
                 <li>
                   <span className="font-semibold text-white">
                     07:00 — Morning Check-In.
@@ -119,7 +119,7 @@ export default function HomePage() {
                   Debrief the day. Wins, failures, countermeasures.
                 </li>
               </ul>
-              <p className="mt-5 text-xs text-iron">
+              <p className="mt-4 text-[0.7rem] text-iron sm:mt-5 sm:text-xs">
                 Weekly, you receive a cold summary of your performance. Habits,
                 streaks, weak links.
               </p>
@@ -129,12 +129,15 @@ export default function HomePage() {
       </section>
 
       {/* WHAT IT IS */}
-      <section id="what" className="border-b border-stealth bg-[#050505] py-20">
-        <div className="mx-auto max-w-5xl space-y-6 px-6">
-          <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
+      <section
+        id="what"
+        className="border-b border-stealth bg-[#050505] py-14 sm:py-16 md:py-20"
+      >
+        <div className="mx-auto max-w-5xl space-y-5 px-5 sm:px-6 md:space-y-6 fade-in">
+          <h2 className="font-[var(--font-heading)] text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-iron sm:text-sm md:text-base">
             What MindArsenal is
           </h2>
-          <p className="max-w-3xl text-base text-neutral-100 md:text-lg">
+          <p className="max-w-3xl text-sm text-neutral-100 sm:text-base md:text-lg">
             MindArsenal is a{" "}
             <span className="font-semibold">
               chat-based AI drill sergeant
@@ -143,7 +146,7 @@ export default function HomePage() {
             evening accountability, and weekly reviews. No feeds. No dopamine
             traps. Just disciplined feedback loops.
           </p>
-          <p className="max-w-3xl text-sm text-neutral-300 md:text-base">
+          <p className="max-w-3xl text-[0.85rem] text-neutral-300 sm:text-sm md:text-base">
             The system is built for people who secretly know they need pressure,
             not comfort. You state your goals. MindArsenal tracks execution,
             rejects excuses, and forces you to adapt your strategy instead of
@@ -153,23 +156,26 @@ export default function HomePage() {
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="border-b border-stealth py-20">
-        <div className="mx-auto max-w-5xl px-6">
-          <h2 className="mb-10 font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
+      <section
+        id="features"
+        className="border-b border-stealth py-14 sm:py-16 md:py-20"
+      >
+        <div className="mx-auto max-w-5xl px-5 sm:px-6">
+          <h2 className="fade-in font-[var(--font-heading)] mb-8 text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-iron sm:mb-10 sm:text-sm md:text-base">
             Core features
           </h2>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
             {/* Morning Check-In */}
-            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
-              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
+            <div className="fade-in rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth sm:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.2em] sm:text-sm">
                 Morning Check-In
               </h3>
-              <p className="mb-4 text-sm text-neutral-300">
+              <p className="mb-4 text-[0.8rem] text-neutral-300 sm:text-sm">
                 Start the day with a cold briefing. State your top missions.
                 Receive a prioritized, clear plan.
               </p>
-              <ul className="mt-auto space-y-2 text-xs text-iron">
+              <ul className="mt-auto space-y-2 text-[0.75rem] text-iron sm:text-xs">
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
                   <span>No vague goals. Concrete targets only.</span>
@@ -185,16 +191,16 @@ export default function HomePage() {
               </ul>
             </div>
 
-            {/* Evening Report */}
-            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
-              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
+            {/* Nightly Debrief */}
+            <div className="fade-in-delay-1 rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth sm:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.2em] sm:text-sm">
                 Nightly Debrief
               </h3>
-              <p className="mb-4 text-sm text-neutral-300">
+              <p className="mb-4 text-[0.8rem] text-neutral-300 sm:text-sm">
                 Every night you report what you executed, where you failed, and
                 why. No hiding.
               </p>
-              <ul className="mt-auto space-y-2 text-xs text-iron">
+              <ul className="mt-auto space-y-2 text-[0.75rem] text-iron sm:text-xs">
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
                   <span>No excuses. Only causes and countermeasures.</span>
@@ -210,16 +216,16 @@ export default function HomePage() {
               </ul>
             </div>
 
-            {/* Weekly Summary */}
-            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
-              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
+            {/* Weekly War Report */}
+            <div className="fade-in-delay-2 rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth sm:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-[0.8rem] font-semibold uppercase tracking-[0.2em] sm:text-sm">
                 Weekly War Report
               </h3>
-              <p className="mb-4 text-sm text-neutral-300">
+              <p className="mb-4 text-[0.8rem] text-neutral-300 sm:text-sm">
                 Once per week, you receive a tactical overview of your
                 performance. Streaks, weak links, and next focus.
               </p>
-              <ul className="mt-auto space-y-2 text-xs text-iron">
+              <ul className="mt-auto space-y-2 text-[0.75rem] text-iron sm:text-xs">
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
                   <span>Habit completion rate and consistency.</span>
@@ -239,14 +245,17 @@ export default function HomePage() {
       </section>
 
       {/* TONE OF VOICE */}
-      <section id="tone" className="border-b border-stealth bg-[#050505] py-20">
-        <div className="mx-auto max-w-5xl space-y-8 px-6">
-          <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
+      <section
+        id="tone"
+        className="border-b border-stealth bg-[#050505] py-14 sm:py-16 md:py-20"
+      >
+        <div className="mx-auto max-w-5xl space-y-7 px-5 sm:px-6 md:space-y-8 fade-in">
+          <h2 className="font-[var(--font-heading)] text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-iron sm:text-sm md:text-base">
             Tone of voice · Asmo Style™
           </h2>
 
-          <div className="grid gap-8 md:grid-cols-2">
-            <div className="space-y-3 text-sm text-neutral-200 md:text-base">
+          <div className="grid gap-6 md:grid-cols-2 md:gap-8">
+            <div className="space-y-3 text-[0.85rem] text-neutral-200 sm:text-sm md:text-base">
               <p>Short. Direct. Commanding. No excuses.</p>
               <p>
                 MindArsenal speaks like a ruthless warrior mentor. Compassionate
@@ -254,7 +263,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="space-y-2 text-xs text-neutral-300 md:text-sm">
+            <div className="space-y-2 text-[0.8rem] text-neutral-300 sm:text-xs md:text-sm">
               <p className="text-neutral-100 font-semibold">Sample lines:</p>
               <ul className="space-y-1">
                 <li>“Execute.”</li>
@@ -269,13 +278,16 @@ export default function HomePage() {
       </section>
 
       {/* ENLIST / CONTACT */}
-      <section id="enlist" className="bg-battle py-20">
-        <div className="mx-auto max-w-5xl space-y-8 px-6">
-          <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
+      <section
+        id="enlist"
+        className="bg-battle py-14 sm:py-16 md:py-20 fade-in"
+      >
+        <div className="mx-auto max-w-5xl space-y-7 px-5 sm:px-6 md:space-y-8">
+          <h2 className="font-[var(--font-heading)] text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-iron sm:text-sm md:text-base">
             Enlist as an early tester
           </h2>
 
-          <p className="max-w-3xl text-sm text-neutral-200 md:text-base">
+          <p className="max-w-3xl text-[0.85rem] text-neutral-200 sm:text-sm md:text-base">
             First we move with a small unit. If you want MindArsenal to drill
             your habits from day one, send a disciplined enlistment and complete
             the form. Name, time zone, goals. No fluff.
@@ -283,7 +295,7 @@ export default function HomePage() {
 
           <div className="space-y-4 text-sm text-neutral-200">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <span className="font-[var(--font-heading)] w-32 text-xs font-semibold uppercase tracking-[0.18em] text-iron">
+              <span className="font-[var(--font-heading)] w-32 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-iron sm:text-xs">
                 Email
               </span>
               <a
@@ -294,20 +306,28 @@ export default function HomePage() {
               </a>
             </div>
 
-            <button
-              onClick={() => setShowForm(true)}
-              className="font-[var(--font-heading)] inline-flex items-center justify-center px-6 py-2 text-xs font-semibold uppercase tracking-[0.22em] bg-crimson text-white shadow-crimson glow-crimson transition-colors hover:bg-crimson/80 md:text-sm"
-            >
-              Open Enlist Form
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => setShowForm(true)}
+                className="font-[var(--font-heading)] inline-flex items-center justify-center px-6 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.24em] bg-crimson text-white shadow-crimson glow-crimson transition-colors hover:bg-crimson/80 sm:text-xs md:text-sm"
+              >
+                Open Enlist Form
+              </button>
+              <a
+                href="/enlist"
+                className="inline-flex items-center text-[0.75rem] underline-offset-4 text-neutral-300 underline hover:text-white sm:text-xs"
+              >
+                Or open the full enlist page →
+              </a>
+            </div>
           </div>
 
-          <p className="max-w-xl text-xs text-iron">
+          <p className="max-w-xl text-[0.7rem] text-iron sm:text-xs">
             If you can’t complete a basic enlist form and send one clear
             message, you’re not ready for this tool.
           </p>
 
-          <div className="flex flex-wrap justify-between gap-2 border-t border-stealth pt-6 text-[10px] text-iron md:text-xs">
+          <div className="mt-4 flex flex-wrap justify-between gap-2 border-t border-stealth pt-5 text-[0.65rem] text-iron sm:mt-6 sm:text-[0.7rem] md:text-xs">
             <span>
               © {new Date().getFullYear()} MindArsenal · War on mediocrity
             </span>
