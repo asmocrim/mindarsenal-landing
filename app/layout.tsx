@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Montserrat, Open_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+
 
 const headingFont = Montserrat({
   subsets: ["latin"],
@@ -74,6 +76,7 @@ export default function RootLayout({
 
         {/* Foreground content */}
         <div className="page-shell relative z-10">{children}</div>
+        <Analytics /> 
       </body>
     </html>
   );
