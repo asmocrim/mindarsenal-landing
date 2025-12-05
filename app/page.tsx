@@ -2,119 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-
-// -----------------------------------------------------
-// Minimal Enlist Modal (Asmo Style) – now with animation
-// -----------------------------------------------------
-function EnlistModal({ onClose }: { onClose: () => void }) {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const form = e.currentTarget;
-    const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      timezone: (form.elements.namedItem("timezone") as HTMLInputElement).value,
-      goals: (form.elements.namedItem("goals") as HTMLTextAreaElement).value,
-    };
-
-    try {
-      await fetch(
-        "https://script.google.com/macros/u/4/s/AKfycbyrkQjSchQ9Ma1jCd10ixvzSUulRJr8D4hKf733fxTir6xCiE2vfbhgVIkpvRFZHMc_/exec",
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
-
-      setSuccess(true);
-      (form.elements.namedItem("name") as HTMLInputElement).value = "";
-      (form.elements.namedItem("email") as HTMLInputElement).value = "";
-      (form.elements.namedItem("timezone") as HTMLInputElement).value = "";
-      (form.elements.namedItem("goals") as HTMLTextAreaElement).value = "";
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-      setTimeout(() => onClose(), 2000);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-      <div className="w-full max-w-sm border border-stealth bg-[#0b0b0b] p-7 shadow-iron animate-scale-in">
-        {!success ? (
-          <>
-            <h2 className="mb-5 font-[var(--font-heading)] text-xl font-semibold uppercase tracking-wide text-white">
-              Enlist Now
-            </h2>
-
-            <form onSubmit={handleSubmit} className="space-y-4 text-sm">
-              <input
-                name="name"
-                placeholder="Name"
-                required
-                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson focus:ring-1 focus:ring-crimson/70"
-              />
-
-              <input
-                name="email"
-                type="email"
-                placeholder="Email"
-                required
-                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson focus:ring-1 focus:ring-crimson/70"
-              />
-
-              <input
-                name="timezone"
-                placeholder="Time Zone (e.g., CET)"
-                required
-                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson focus:ring-1 focus:ring-crimson/70"
-              />
-
-              <textarea
-                name="goals"
-                placeholder="Current goals and why you need MindArsenal."
-                rows={3}
-                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson focus:ring-1 focus:ring-crimson/70"
-              />
-
-              <button
-                type="submit"
-                className="w-full bg-crimson py-2 text-sm font-semibold uppercase tracking-[0.22em] text-white shadow-crimson transition hover:bg-crimson/85 disabled:opacity-60"
-                disabled={loading}
-              >
-                {loading ? "Processing..." : "Submit"}
-              </button>
-
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-full py-2 text-xs text-iron transition hover:text-neutral-300"
-              >
-                Cancel
-              </button>
-            </form>
-          </>
-        ) : (
-          <p className="py-10 text-center text-sm text-white">
-            Request received. If you’re a fit, you’ll hear back. Stay sharp.
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// -----------------------------------------------------
-// PAGE COMPONENT
-// -----------------------------------------------------
+import EnlistModal from "./_components/EnlistModal";
 
 export default function HomePage() {
   const [showForm, setShowForm] = useState(false);
@@ -122,10 +10,10 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col bg-battle text-white">
       {/* HERO */}
-      <section className="hero-gradient grid-bg relative flex-1 border-b border-stealth overflow-hidden">
-        <div className="relative mx-auto max-w-5xl px-6 py-8 lg:py-16">
+      <section className="flex-1 border-b border-stealth">
+        <div className="relative mx-auto max-w-5xl px-6 py-10 lg:py-20">
           {/* Top bar */}
-          <header className="mb-16 flex items-center gap-6 animate-fade-in">
+          <header className="mb-16 flex items-center gap-6">
             <div className="flex items-center gap-3">
               <div className="relative h-8 w-8">
                 <Image
@@ -159,12 +47,12 @@ export default function HomePage() {
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)] lg:items-center">
             {/* Hero copy */}
-            <div className="space-y-8 opacity-0 animate-fade-up [animation-delay:120ms]">
+            <div className="space-y-8">
               <p className="font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.25em] text-crimson">
                 War on mediocrity
               </p>
 
-              <h1 className="font-[var(--font-heading)] text-5xl font-bold uppercase tracking-tight leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.12)] md:text-6xl lg:text-7xl">
+              <h1 className="font-[var(--font-heading)] text-5xl font-bold uppercase leading-tight tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.12)] md:text-6xl lg:text-7xl">
                 AI discipline
                 <br />
                 coach.
@@ -180,24 +68,23 @@ export default function HomePage() {
                   Morning Check-In
                 </span>
                 ,{" "}
-                <span className="font-semibold text-white">Evening Report</span>{" "}
+                <span className="font-semibold text-white">
+                  Nightly Debrief
+                </span>{" "}
                 and{" "}
                 <span className="font-semibold text-white">
-                  Weekly Summary
+                  Weekly War Report
                 </span>
-                . It tracks your execution. It calls out your weakness. It
-                pushes you to elite standards.
+                . It tracks your execution, calls out your weakness, and forces
+                elite standards.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => setShowForm(true)}
-                  className="inline-flex items-center justify-center px-8 py-3 font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.25em] bg-crimson text-white shadow-crimson transition-transform transition-colors hover:-translate-y-[1px] hover:bg-crimson/90"
+                  className="font-[var(--font-heading)] inline-flex items-center justify-center px-8 py-3 text-xs font-semibold uppercase tracking-[0.25em] bg-crimson text-white transition-colors shadow-crimson glow-crimson hover:bg-crimson/80 md:text-sm"
                 >
-                  <span className="relative">
-                    ENLIST NOW
-                    <span className="pointer-events-none absolute -inset-3 -z-10 rounded-full animate-pulse-ring" />
-                  </span>
+                  ENLIST NOW
                 </button>
                 <p className="text-xs text-iron">
                   First cohort: limited early testers.
@@ -208,7 +95,7 @@ export default function HomePage() {
             </div>
 
             {/* Daily protocol card */}
-            <aside className="card-shell border border-stealth bg-[#101010]/90 p-7 shadow-stealth opacity-0 animate-fade-up [animation-delay:260ms] md:p-8">
+            <aside className="rounded-none border border-stealth bg-[#101010]/95 p-7 shadow-stealth backdrop-blur-sm md:p-8">
               <h2 className="mb-4 font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.25em] text-iron">
                 Daily protocol
               </h2>
@@ -227,7 +114,7 @@ export default function HomePage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">
-                    21:00 — Evening Report.
+                    21:00 — Nightly Debrief.
                   </span>{" "}
                   Debrief the day. Wins, failures, countermeasures.
                 </li>
@@ -242,26 +129,25 @@ export default function HomePage() {
       </section>
 
       {/* WHAT IT IS */}
-      <section
-        id="what"
-        className="grid-bg border-b border-stealth bg-[#050505] py-20"
-      >
-        <div className="mx-auto max-w-5xl space-y-6 px-6 opacity-0 animate-fade-up">
+      <section id="what" className="border-b border-stealth bg-[#050505] py-20">
+        <div className="mx-auto max-w-5xl space-y-6 px-6">
           <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
             What MindArsenal is
           </h2>
           <p className="max-w-3xl text-base text-neutral-100 md:text-lg">
             MindArsenal is a{" "}
-            <span className="font-semibold">chat-based AI drill sergeant</span>{" "}
-            for your life. It runs on simple routines: morning planning, evening
-            accountability, and weekly reviews. No feeds. No dopamine traps.
-            Just disciplined feedback loops.
+            <span className="font-semibold">
+              chat-based AI drill sergeant
+            </span>{" "}
+            for your life. It runs simple, brutal routines: morning planning,
+            evening accountability, and weekly reviews. No feeds. No dopamine
+            traps. Just disciplined feedback loops.
           </p>
           <p className="max-w-3xl text-sm text-neutral-300 md:text-base">
             The system is built for people who secretly know they need pressure,
             not comfort. You state your goals. MindArsenal tracks execution,
-            confronts excuses, and forces you to adapt your strategy instead of
-            repeating the same weak patterns.
+            rejects excuses, and forces you to adapt your strategy instead of
+            repeating weak patterns.
           </p>
         </div>
       </section>
@@ -275,13 +161,13 @@ export default function HomePage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {/* Morning Check-In */}
-            <div className="card-shell flex flex-col border border-stealth bg-[#050505] p-5 opacity-0 shadow-stealth transition-transform hover:-translate-y-[3px] md:p-6 animate-fade-up [animation-delay:80ms]">
-              <h3 className="mb-3 font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.2em]">
+            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
                 Morning Check-In
               </h3>
               <p className="mb-4 text-sm text-neutral-300">
-                Start the day with a cold briefing. State your top missions. Get
-                a prioritized, clear plan.
+                Start the day with a cold briefing. State your top missions.
+                Receive a prioritized, clear plan.
               </p>
               <ul className="mt-auto space-y-2 text-xs text-iron">
                 <li className="flex gap-2">
@@ -300,18 +186,18 @@ export default function HomePage() {
             </div>
 
             {/* Evening Report */}
-            <div className="card-shell flex flex-col border border-stealth bg-[#050505] p-5 opacity-0 shadow-stealth transition-transform hover:-translate-y-[3px] md:p-6 animate-fade-up [animation-delay:180ms]">
-              <h3 className="mb-3 font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.2em]">
-                Evening Report
+            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
+                Nightly Debrief
               </h3>
               <p className="mb-4 text-sm text-neutral-300">
-                Debrief every night. Report what you executed, where you failed,
-                and why.
+                Every night you report what you executed, where you failed, and
+                why. No hiding.
               </p>
               <ul className="mt-auto space-y-2 text-xs text-iron">
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
-                  <span>No excuses. Only reasons and fixes.</span>
+                  <span>No excuses. Only causes and countermeasures.</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
@@ -325,18 +211,18 @@ export default function HomePage() {
             </div>
 
             {/* Weekly Summary */}
-            <div className="card-shell flex flex-col border border-stealth bg-[#050505] p-5 opacity-0 shadow-stealth transition-transform hover:-translate-y-[3px] md:p-6 animate-fade-up [animation-delay:280ms]">
-              <h3 className="mb-3 font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.2em]">
-                Weekly Summary
+            <div className="flex flex-col rounded-none border border-stealth bg-[#050505] p-5 shadow-stealth md:p-6">
+              <h3 className="font-[var(--font-heading)] mb-3 text-sm font-semibold uppercase tracking-[0.2em]">
+                Weekly War Report
               </h3>
               <p className="mb-4 text-sm text-neutral-300">
-                Once per week, get a tactical overview of your performance.
-                Streaks, weak links, and next focus.
+                Once per week, you receive a tactical overview of your
+                performance. Streaks, weak links, and next focus.
               </p>
               <ul className="mt-auto space-y-2 text-xs text-iron">
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
-                  <span>Habit completion rate &amp; consistency.</span>
+                  <span>Habit completion rate and consistency.</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-crimson">▐</span>
@@ -353,11 +239,8 @@ export default function HomePage() {
       </section>
 
       {/* TONE OF VOICE */}
-      <section
-        id="tone"
-        className="grid-bg border-b border-stealth bg-[#050505] py-20"
-      >
-        <div className="mx-auto max-w-5xl space-y-8 px-6 opacity-0 animate-fade-up">
+      <section id="tone" className="border-b border-stealth bg-[#050505] py-20">
+        <div className="mx-auto max-w-5xl space-y-8 px-6">
           <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
             Tone of voice · Asmo Style™
           </h2>
@@ -372,7 +255,7 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-2 text-xs text-neutral-300 md:text-sm">
-              <p className="font-semibold text-neutral-100">Sample lines:</p>
+              <p className="text-neutral-100 font-semibold">Sample lines:</p>
               <ul className="space-y-1">
                 <li>“Execute.”</li>
                 <li>“Report your progress.”</li>
@@ -387,7 +270,7 @@ export default function HomePage() {
 
       {/* ENLIST / CONTACT */}
       <section id="enlist" className="bg-battle py-20">
-        <div className="mx-auto max-w-5xl space-y-8 px-6 opacity-0 animate-fade-up">
+        <div className="mx-auto max-w-5xl space-y-8 px-6">
           <h2 className="font-[var(--font-heading)] text-sm font-semibold uppercase tracking-[0.25em] text-iron md:text-base">
             Enlist as an early tester
           </h2>
@@ -400,12 +283,12 @@ export default function HomePage() {
 
           <div className="space-y-4 text-sm text-neutral-200">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <span className="w-32 font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.18em] text-iron">
+              <span className="font-[var(--font-heading)] w-32 text-xs font-semibold uppercase tracking-[0.18em] text-iron">
                 Email
               </span>
               <a
                 href="mailto:asmo@mindarsenal.com?subject=MindArsenal%20Early%20Tester%20Enlistment"
-                className="text-sm text-crimson underline underline-offset-4 transition hover:text-crimson/80"
+                className="underline-offset-4 text-sm text-crimson underline hover:text-crimson/80"
               >
                 asmo@mindarsenal.com
               </a>
@@ -413,7 +296,7 @@ export default function HomePage() {
 
             <button
               onClick={() => setShowForm(true)}
-              className="inline-flex items-center justify-center bg-crimson px-6 py-2 font-[var(--font-heading)] text-xs font-semibold uppercase tracking-[0.22em] text-white shadow-crimson transition hover:-translate-y-[1px] hover:bg-crimson/90"
+              className="font-[var(--font-heading)] inline-flex items-center justify-center px-6 py-2 text-xs font-semibold uppercase tracking-[0.22em] bg-crimson text-white shadow-crimson glow-crimson transition-colors hover:bg-crimson/80 md:text-sm"
             >
               Open Enlist Form
             </button>
@@ -433,12 +316,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {showForm && <EnistModalFallback onClose={() => setShowForm(false)} />}
+      {showForm && <EnlistModal onClose={() => setShowForm(false)} />}
     </main>
   );
-}
-
-// Small wrapper so JSX stays clean
-function EnistModalFallback({ onClose }: { onClose: () => void }) {
-  return <EnlistModal onClose={onClose} />;
 }

@@ -2,60 +2,112 @@
 
 import { useState } from "react";
 
-export default function EnlistModal({ onClose }: { onClose: () => void }) {
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/u/4/s/AKfycbyrkQjSchQ9Ma1jCd10ixvzSUulRJr8D4hKf733fxTir6xCiE2vfbhgVIkpvRFZHMc_/exec";
+
+type EnlistModalProps = {
+  onClose: () => void;
+};
+
+export default function EnlistModal({ onClose }: EnlistModalProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: any) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
-    const data = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      timezone: e.target.timezone.value,
-      goals: e.target.goals.value,
+    const form = e.currentTarget;
+
+    const payload = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      timezone: (form.elements.namedItem("timezone") as HTMLInputElement).value,
+      goals: (form.elements.namedItem("goals") as HTMLTextAreaElement).value,
     };
 
-    await fetch("YOUR_APPS_SCRIPT_EXEC_URL", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    setLoading(false);
-    setSuccess(true);
+      setSuccess(true);
 
-    setTimeout(() => onClose(), 2000);
-  };
+      // reset form
+      (form.elements.namedItem("name") as HTMLInputElement).value = "";
+      (form.elements.namedItem("email") as HTMLInputElement).value = "";
+      (form.elements.namedItem("timezone") as HTMLInputElement).value = "";
+      (form.elements.namedItem("goals") as HTMLTextAreaElement).value = "";
+    } catch (err) {
+      console.error("Enlist submit error:", err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => onClose(), 2000);
+    }
+  }
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-      <div className="bg-[#0c0c0c] border border-white/10 p-8 w-[380px]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
+      <div className="w-full max-w-sm bg-[#0b0b0b] border border-stealth p-8 shadow-stealth">
         {!success ? (
           <>
-            <h2 className="text-xl font-semibold text-white mb-4">
+            <h2 className="mb-5 text-xl font-semibold tracking-wide text-white font-[var(--font-heading)] uppercase">
               Enlist Now
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input className="w-full bg-black border border-white/20 px-3 py-2" name="name" placeholder="Name" required />
-              <input className="w-full bg-black border border-white/20 px-3 py-2" name="email" placeholder="Email" required />
-              <input className="w-full bg-black border border-white/20 px-3 py-2" name="timezone" placeholder="Time Zone (e.g. CET)" required />
-              <textarea className="w-full bg-black border border-white/20 px-3 py-2" name="goals" placeholder="Current Goals" rows={3} />
+              <input
+                name="name"
+                placeholder="Name"
+                required
+                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+              />
+
+              <input
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+              />
+
+              <input
+                name="timezone"
+                placeholder="Time Zone (e.g., CET)"
+                required
+                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+              />
+
+              <textarea
+                name="goals"
+                placeholder="Current goals and why you need MindArsenal."
+                rows={3}
+                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+              />
 
               <button
                 type="submit"
-                className="w-full py-2 bg-red-600 text-white hover:bg-red-500"
+                disabled={loading}
+                className="w-full py-2 text-sm font-semibold tracking-[0.25em] uppercase bg-crimson text-white transition hover:bg-crimson/80 glow-crimson shadow-crimson"
               >
-                {loading ? "Processing..." : "SUBMIT"}
+                {loading ? "Processing..." : "Submit"}
+              </button>
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-full py-2 text-xs text-iron transition hover:text-neutral-300"
+              >
+                Cancel
               </button>
             </form>
           </>
         ) : (
-          <p className="text-white text-center">
-            Request received. Stay sharp.
+          <p className="py-10 text-center text-sm text-white">
+            Request received. If you’re a fit, you’ll hear back. Stay sharp.
           </p>
         )}
       </div>
