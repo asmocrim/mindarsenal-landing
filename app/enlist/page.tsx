@@ -1,71 +1,75 @@
 // app/enlist/page.tsx
-"use client";
-
-import Link from "next/link";
-import { EnlistForm } from "../_components/EnlistForm";
 import type { Metadata } from "next";
+import { EnlistForm } from "../_components/EnlistForm";
 
 export const metadata: Metadata = {
   title: "Enlist – MindArsenal",
   description: "Join the MindArsenal waitlist.",
-  // theme color comes from root viewport
+  openGraph: {
+    title: "Enlist – MindArsenal",
+    description:
+      "Join the MindArsenal waitlist. War on mediocrity starts with your first report.",
+    url: "https://mindarsenal.com/enlist",
+    siteName: "MindArsenal",
+    type: "website",
+    images: [
+      {
+        url: "/og-mindarsenal.png",
+        width: 1200,
+        height: 630,
+        alt: "MindArsenal – War on mediocrity",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Enlist – MindArsenal",
+    description:
+      "Join the MindArsenal waitlist. War on mediocrity starts with your first report.",
+    images: ["/og-mindarsenal.png"],
+  },
 };
-
 
 export default function EnlistPage() {
   return (
-    <main className="min-h-screen bg-battle text-white">
-      <section className="border-b border-stealth">
-        <div className="mx-auto max-w-5xl px-5 py-10 sm:px-6 sm:py-12 lg:py-16">
-          <header className="mb-8 flex items-center justify-between gap-4">
-            <div className="space-y-1">
-              <p className="font-[var(--font-heading)] text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-crimson sm:text-xs">
-                MindArsenal
-              </p>
-              <h1 className="font-[var(--font-heading)] text-xl font-bold uppercase tracking-[0.18em] sm:text-2xl">
-                Enlistment form
-              </h1>
-            </div>
-
-            <Link
-              href="/"
-              className="text-[0.75rem] text-iron underline-offset-4 underline hover:text-white sm:text-xs"
-            >
-              ← Back to main page
-            </Link>
-          </header>
-
-          <div className="space-y-6 sm:space-y-7 md:space-y-8 fade-in">
-            <p className="max-w-3xl text-[0.85rem] text-neutral-200 sm:text-sm md:text-base">
-              This is not a newsletter. This is an enlistment. If you join the
-              first MindArsenal unit, you commit to daily check-ins, honest
-              reports, and aggressive correction of weak patterns.
-            </p>
-
-            <p className="max-w-3xl text-[0.8rem] text-neutral-400 sm:text-sm">
-              Fill the form with discipline. No fluff. If you’re a fit, you’ll
-              be contacted with instructions. If you’re not, you will hear
-              nothing.
-            </p>
-
-            <EnlistForm />
-          </div>
-
-          <p className="mt-6 max-w-xl text-[0.7rem] text-iron sm:text-xs">
-            By enlisting, you allow MindArsenal to store your name, email and
-            stated goals for the purpose of contacting you and running the
-            discipline system. No spam. No resale. If you want your data
-            removed, you can request it at any time via{" "}
-            <a
-              href="mailto:asmo@mindarsenal.com"
-              className="text-crimson underline underline-offset-4 hover:text-crimson/80"
-            >
-              asmo@mindarsenal.com
-            </a>
-            .
-          </p>
+    <main className="page-shell relative z-10 min-h-screen bg-black text-white">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-20 pt-28 sm:gap-12 sm:pt-32">
+        {/* Breadcrumb / Label */}
+        <div className="text-[0.7rem] uppercase tracking-[0.2em] text-iron sm:text-xs">
+          MindArsenal / Enlist
         </div>
-      </section>
+
+        {/* Heading */}
+        <header className="space-y-4 sm:space-y-5 md:max-w-3xl">
+          <h1 className="text-3xl font-semibold leading-tight tracking-[0.25em] text-white sm:text-4xl md:text-[2.5rem]">
+            ENLIST IN THE WAR
+            <span className="block text-crimson">ON MEDIOCRITY.</span>
+          </h1>
+          <p className="text-sm text-neutral-300 sm:text-base">
+            This is not a newsletter. This is a roster. You enter your details,
+            MindArsenal evaluates, and if you&apos;re a fit, you get access to
+            the AI discipline protocol when it goes live.
+          </p>
+        </header>
+
+        {/* Expectations block */}
+        <section className="space-y-4 rounded-lg border border-stealth bg-[#050505] p-6 sm:p-8">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-iron sm:text-sm">
+            READ BEFORE ENLISTING
+          </h2>
+          <ul className="space-y-2 text-sm text-neutral-200 sm:text-base">
+            <li>• Daily Check-Ins. No ghosting.</li>
+            <li>• Brutally honest reports – no excuses, no filters.</li>
+            <li>• You execute offline. MindArsenal tracks your discipline.</li>
+            <li>• If you&apos;re not serious, don&apos;t enlist.</li>
+          </ul>
+        </section>
+
+        {/* Form */}
+        <section className="fade-in">
+          <EnlistForm />
+        </section>
+      </div>
     </main>
   );
 }
