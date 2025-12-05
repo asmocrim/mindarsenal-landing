@@ -1,12 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    // Allow dev server to run on LAN (your PC local network)
-    allowedDevOrigins: [
-      "http://localhost:3000",
-      "http://192.168.1.3:3000", // your LAN IP
-    ],
-  },
+// next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  // Add other stable config options here later if needed
 };
 
 export default nextConfig;
