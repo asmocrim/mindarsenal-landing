@@ -27,33 +27,33 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
     };
 
     try {
-      const res = await fetch(APPS_SCRIPT_URL, {
+      // Send to Google Apps Script (which then writes to Sheets + Telegram)
+      await fetch(APPS_SCRIPT_URL, {
         method: "POST",
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      // For debugging if something goes wrong later
-      console.log("Modal enlist response status:", res.status);
-
       setSuccess(true);
 
-      // reset form
+      // Reset form fields
       (form.elements.namedItem("name") as HTMLInputElement).value = "";
       (form.elements.namedItem("email") as HTMLInputElement).value = "";
       (form.elements.namedItem("timezone") as HTMLInputElement).value = "";
       (form.elements.namedItem("goals") as HTMLTextAreaElement).value = "";
     } catch (err) {
-      console.error("Enlist submit error (modal):", err);
+      console.error("Enlist submit error:", err);
     } finally {
       setLoading(false);
+      // Close modal shortly after success (or attempt)
       setTimeout(() => onClose(), 2000);
     }
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-      <div className="w-full max-w-sm bg-[#0b0b0b] border border-stealth p-8 shadow-stealth">
+      <div className="w-full max-w-sm border border-stealth bg-[#0b0b0b] p-8 shadow-stealth">
         {!success ? (
           <>
             <h2 className="mb-5 text-xl font-semibold tracking-wide text-white font-[var(--font-heading)] uppercase">
@@ -65,7 +65,7 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
                 name="name"
                 placeholder="Name"
                 required
-                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
               />
 
               <input
@@ -73,21 +73,21 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
                 type="email"
                 placeholder="Email"
                 required
-                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
               />
 
               <input
                 name="timezone"
                 placeholder="Time Zone (e.g., CET)"
                 required
-                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
               />
 
               <textarea
                 name="goals"
                 placeholder="Current goals and why you need MindArsenal."
                 rows={3}
-                className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+                className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
               />
 
               <button

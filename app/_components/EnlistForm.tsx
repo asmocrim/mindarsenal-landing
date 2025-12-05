@@ -20,20 +20,19 @@ export function EnlistForm() {
     setError(null);
 
     try {
-      const res = await fetch(APPS_SCRIPT_URL, {
+      await fetch(APPS_SCRIPT_URL, {
         method: "POST",
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, goals }),
       });
-
-      console.log("Enlist page response status:", res.status);
 
       setStatus("success");
       setName("");
       setEmail("");
       setGoals("");
     } catch (err: any) {
-      console.error("Enlist page error:", err);
+      console.error("EnlistForm submit error:", err);
       setStatus("error");
       setError(err?.message || "Something went wrong.");
     }
@@ -54,7 +53,7 @@ export function EnlistForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+            className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
             placeholder="Your name"
           />
         </div>
@@ -68,7 +67,7 @@ export function EnlistForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+            className="w-full border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
             placeholder="asmo@mindarsenal.com"
           />
         </div>
@@ -94,7 +93,7 @@ export function EnlistForm() {
       </div>
 
       <div className="space-y-3 text-[0.8rem] text-neutral-300 sm:text-sm">
-        <p className="text-neutral-100 font-semibold">
+        <p className="font-semibold text-neutral-100">
           What MindArsenal expects from you:
         </p>
         <ul className="space-y-2">
@@ -112,7 +111,7 @@ export function EnlistForm() {
             value={goals}
             onChange={(e) => setGoals(e.target.value)}
             rows={4}
-            className="w-full resize-none bg-battle border border-iron px-3 py-2 text-sm text-white outline-none focus:border-crimson"
+            className="w-full resize-none border border-iron bg-battle px-3 py-2 text-sm text-white outline-none focus:border-crimson"
             placeholder="Example: Fix my sleep, build training discipline, stop wasting evenings..."
           />
         </div>
