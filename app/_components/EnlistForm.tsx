@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzSWPutBYMf1wAsCjtsoofJ3nw4MO_ALlFxw2TlZrI3htMs2aviWDTsN3wGHwE9ik/exec";
+  "https://script.google.com/macros/s/AKfycbzSWPutBYMf1wAsCjtsoofJ3nw4MO_ALlFxw2TlzZI73htMs2aviWDTsN3wGHwE9ik/exec";
 
 export function EnlistForm() {
   const [name, setName] = useState("");
