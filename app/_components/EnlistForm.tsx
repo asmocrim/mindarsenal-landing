@@ -19,13 +19,30 @@ export function EnlistForm() {
     setStatus("loading");
     setError(null);
 
+    const payload = {
+      name,
+      email,
+      goals,
+      timezone: "", // not collected on this form
+    };
+
     try {
+      // 1) Google Apps Script
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, goals }),
+        body: JSON.stringify(payload),
       });
+
+      // 2) Telegram alert
+      fetch("/api/enlist-alert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((err) =>
+        console.error("Telegram alert error (enlist page):", err),
+      );
 
       setStatus("success");
       setName("");

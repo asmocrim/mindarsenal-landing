@@ -27,12 +27,22 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
     };
 
     try {
+      // 1) Send to Google Sheet
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
+      // 2) Send Telegram alert (fire-and-forget – errors don’t block user)
+      fetch("/api/enlist-alert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((err) =>
+        console.error("Telegram alert error (modal):", err),
+      );
 
       setSuccess(true);
 
@@ -51,10 +61,10 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
-      <div className="w-full max-w-sm bg-[#0b0b0b] border border-stealth p-8 shadow-stealth">
+      <div className="w-full max-w-sm border border-stealth bg-[#0b0b0b] p-8 shadow-stealth">
         {!success ? (
           <>
-            <h2 className="mb-5 text-xl font-semibold tracking-wide text-white font-[var(--font-heading)] uppercase">
+            <h2 className="mb-5 font-[var(--font-heading)] text-xl font-semibold uppercase tracking-wide text-white">
               Enlist Now
             </h2>
 
@@ -91,7 +101,7 @@ export default function EnlistModal({ onClose }: EnlistModalProps) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2 text-sm font-semibold tracking-[0.25em] uppercase bg-crimson text-white transition hover:bg-crimson/80 glow-crimson shadow-crimson"
+                className="w-full bg-crimson py-2 text-sm font-semibold uppercase tracking-[0.25em] text-white shadow-crimson transition hover:bg-crimson/80 glow-crimson"
               >
                 {loading ? "Processing..." : "Submit"}
               </button>
