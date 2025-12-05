@@ -3,6 +3,14 @@
 
 import Link from "next/link";
 import { EnlistForm } from "../_components/EnlistForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Enlist – MindArsenal",
+  description: "Join the MindArsenal waitlist.",
+  // theme color comes from root viewport
+};
+
 
 export default function EnlistPage() {
   return (
